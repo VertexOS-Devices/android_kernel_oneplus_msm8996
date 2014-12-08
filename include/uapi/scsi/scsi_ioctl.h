@@ -62,5 +62,8 @@ struct scsi_device;
 extern int scsi_ioctl(struct scsi_device *, int, void __user *);
 extern int scsi_nonblockable_ioctl(struct scsi_device *sdev, int cmd,
 				   void __user *arg, int ndelay);
+int scsi_ioctl_block_when_processing_errors(struct scsi_device *sdev,
+		int cmd, bool ndelay);
+
 #endif /* __KERNEL__ */
 #endif /* _SCSI_IOCTL_H */
