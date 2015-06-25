@@ -252,7 +252,7 @@ static int virtblk_get_id(struct gendisk *disk, char *id_str)
 		return PTR_ERR(req);
 	}
 
-	req->cmd_type = REQ_TYPE_SPECIAL;
+	req->cmd_type = REQ_TYPE_DRV_PRIV;
 	err = blk_execute_rq(vblk->disk->queue, vblk->disk, req, false);
 	blk_put_request(req);
 
