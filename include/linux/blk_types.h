@@ -150,8 +150,6 @@ struct bio {
 #define BIO_DONTFREE 14
 #define BIO_INLINECRYPT 15
 
-#define bio_flagged(bio, flag)	((bio)->bi_flags & (1 << (flag)))
-
 /*
  * top 4 bits of bio flags indicate the pool this bio came from
  */
