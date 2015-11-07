@@ -149,7 +149,7 @@ static void *__dma_alloc_coherent(struct device *dev, size_t size,
 	if (IS_ENABLED(CONFIG_ZONE_DMA) &&
 	    dev->coherent_dma_mask <= DMA_BIT_MASK(32))
 		flags |= GFP_DMA;
-	if (IS_ENABLED(CONFIG_DMA_CMA) && (flags & __GFP_WAIT)) {
+	if (IS_ENABLED(CONFIG_DMA_CMA) && gfpflags_allow_blocking(flags)) {
 		struct page *page;
 		void *addr;
 
@@ -211,7 +211,7 @@ static void *__dma_alloc_noncoherent(struct device *dev, size_t size,
 
 	size = PAGE_ALIGN(size);
 
-	if (!(flags & __GFP_WAIT)) {
+	if (!gfpflags_allow_blocking(flags)) {
 		struct page **page = NULL;
 		int count = size >> PAGE_SHIFT;
 		int array_size = count * sizeof(struct page *);
