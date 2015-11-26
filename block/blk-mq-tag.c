@@ -112,7 +112,7 @@ static int bt_get(struct blk_mq_alloc_data *data, struct sbitmap_queue *bt,
 	if (tag != -1)
 		return tag;
 
-	if (!(data->gfp & __GFP_WAIT))
+	if (data->flags & BLK_MQ_REQ_NOWAIT)
 		return -1;
 
 	ws = bt_wait_ptr(bt, hctx);
@@ -147,7 +147,7 @@ static int bt_get(struct blk_mq_alloc_data *data, struct sbitmap_queue *bt,
 		data->ctx = blk_mq_get_ctx(data->q);
 		data->hctx = data->q->mq_ops->map_queue(data->q,
 				data->ctx->cpu);
-		if (data->reserved) {
+		if (data->flags & BLK_MQ_REQ_RESERVED) {
 			bt = &data->hctx->tags->breserved_tags;
 		} else {
 			hctx = data->hctx;
@@ -192,10 +192,9 @@ static unsigned int __blk_mq_get_reserved_tag(struct blk_mq_alloc_data *data)
 
 unsigned int blk_mq_get_tag(struct blk_mq_alloc_data *data)
 {
-	if (!data->reserved)
-		return __blk_mq_get_tag(data);
-
-	return __blk_mq_get_reserved_tag(data);
+	if (data->flags & BLK_MQ_REQ_RESERVED)
+		return __blk_mq_get_reserved_tag(data);
+	return __blk_mq_get_tag(data);
 }
 
 void blk_mq_put_tag(struct blk_mq_hw_ctx *hctx, struct blk_mq_ctx *ctx,

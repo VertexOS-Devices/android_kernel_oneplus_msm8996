@@ -209,8 +209,8 @@ __blk_mq_alloc_request(struct blk_mq_alloc_data *data, int op, int op_flags)
 	return NULL;
 }
 
-struct request *blk_mq_alloc_request(struct request_queue *q, int rw, gfp_t gfp,
-		bool reserved)
+struct request *blk_mq_alloc_request(struct request_queue *q, int rw,
+		unsigned int flags)
 {
 	struct blk_mq_ctx *ctx;
 	struct blk_mq_hw_ctx *hctx;
@@ -218,16 +218,16 @@ struct request *blk_mq_alloc_request(struct request_queue *q, int rw, gfp_t gfp,
 	struct blk_mq_alloc_data alloc_data;
 	int ret;
 
-	ret = blk_queue_enter(q, gfp);
+	ret = blk_queue_enter(q, flags & BLK_MQ_REQ_NOWAIT);
 	if (ret)
 		return ERR_PTR(ret);
 
 	ctx = blk_mq_get_ctx(q);
 	hctx = q->mq_ops->map_queue(q, ctx->cpu);
-	blk_mq_set_alloc_data(&alloc_data, q, gfp & ~__GFP_WAIT,
-			reserved, ctx, hctx);
+	blk_mq_set_alloc_data(&alloc_data, q, flags, ctx, hctx);
 
 	rq = __blk_mq_alloc_request(&alloc_data, rw, 0);
+
 	blk_mq_put_ctx(ctx);
 
 	if (!rq) {
@@ -1227,8 +1227,7 @@ static struct request *blk_mq_map_request(struct request_queue *q,
 		op_flags |= REQ_SYNC;
 
 	trace_block_getrq(q, bio, op);
-	blk_mq_set_alloc_data(&alloc_data, q, GFP_ATOMIC, false, ctx,
-			hctx);
+	blk_mq_set_alloc_data(&alloc_data, q, BLK_MQ_REQ_NOWAIT, ctx, hctx);
 	rq = __blk_mq_alloc_request(&alloc_data, op, op_flags);
 
 	data->hctx = alloc_data.hctx;
