@@ -1829,6 +1829,7 @@ static void blk_mq_map_swqueue(struct request_queue *q,
 		hctx->tags = set->tags[i];
 		WARN_ON(!hctx->tags);
 
+		cpumask_copy(hctx->tags->cpumask, hctx->cpumask);
 		/*
 		 * Set the map size to the number of mapped software queues.
 		 * This is more accurate and more efficient than looping
