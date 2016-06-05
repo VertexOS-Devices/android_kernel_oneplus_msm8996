@@ -106,7 +106,7 @@ static inline const struct user_key_payload *user_key_payload(const struct key *
 /* bio stuffs */
 #define REQ_OP_READ	READ
 #define REQ_OP_WRITE	WRITE
-#define bio_op(bio)	((bio)->bi_rw & 1)
+#define bio_op(bio)    ((bio)->bi_rw & 1)
 
 static inline void bio_set_op_attrs(struct bio *bio, unsigned op,
 		unsigned op_flags)
