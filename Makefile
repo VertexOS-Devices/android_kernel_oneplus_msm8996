@@ -407,7 +407,7 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -std=gnu89
 		   
 # arter97's optimizations
-KBUILD_CFLAGS	+= -pipe -fno-pic -O2 -march=armv8-a+crc
+KBUILD_CFLAGS	+= -pipe -fno-pic -O2
 
 # Snapdragon 820 doesn't need 835769/843419 erratum fixes
 # some toolchain enables those fixes automatically, so opt-out
@@ -419,6 +419,9 @@ LDFLAGS_MODULE	+= $(call ld-option, --no-fix-cortex-a53-835769)
 LDFLAGS_MODULE	+= $(call ld-option, --no-fix-cortex-a53-843419)
 LDFLAGS		+= $(call ld-option, --no-fix-cortex-a53-835769)
 LDFLAGS		+= $(call ld-option, --no-fix-cortex-a53-843419)
+
+# Optimization for Kryo
+KBUILD_CFLAGS	+= -mcpu=cortex-a57
 
 KBUILD_AFLAGS_KERNEL :=
 KBUILD_CFLAGS_KERNEL :=
