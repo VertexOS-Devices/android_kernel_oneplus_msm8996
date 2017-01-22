@@ -884,9 +884,9 @@ static const struct regmap_config tfa98xx_regmap = {
 static int tfa98xx_i2c_probe(struct i2c_client *i2c,
 			     const struct i2c_device_id *id)
 {
-	struct tfa98xx *tfa98xx;
-	int ret;
-	struct device_node *np = i2c->dev.of_node;
+    struct tfa98xx *tfa98xx;
+    int ret;
+    struct device_node *np = i2c->dev.of_node;
     int error = 0;
 
     pr_err("%s\n",__func__);
@@ -895,10 +895,10 @@ static int tfa98xx_i2c_probe(struct i2c_client *i2c,
     if(np!=NULL)
         tfa_codec_np =np;
 
-	if (!i2c_check_functionality(i2c->adapter, I2C_FUNC_I2C)) {
-		dev_err(&i2c->dev, "check_functionality failed\n");
-		return -EIO;
-	}
+    if (!i2c_check_functionality(i2c->adapter, I2C_FUNC_I2C)) {
+        dev_err(&i2c->dev, "check_functionality failed\n");
+        return -EIO;
+    }
 
 	tfa98xx = devm_kzalloc(&i2c->dev, sizeof(struct tfa98xx),
 			       GFP_KERNEL);

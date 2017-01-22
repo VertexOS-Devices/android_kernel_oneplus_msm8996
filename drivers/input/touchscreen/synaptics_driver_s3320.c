@@ -1763,7 +1763,7 @@ static ssize_t synap_read_address(struct file *file, char __user *user_buf, size
     int i;
     int cnt = 0;
 
-	struct synaptics_ts_data *ts = ts_g;
+    struct synaptics_ts_data *ts = ts_g;
     TPD_DEBUG("%s page=0x%x,address=0x%x,block=0x%x\n",__func__,page,address,block);
     cnt += sprintf(&(buffer[cnt]), "page=0x%x,address=0x%x,block=0x%x\n",page,address,block);
     ret = synaptics_rmi4_i2c_write_byte(ts->client,0xff,page);
@@ -1774,20 +1774,20 @@ static ssize_t synap_read_address(struct file *file, char __user *user_buf, size
         TPD_DEBUG("buffer[%d]=0x%x\n",i,buffer[i]);
     }
     ret = simple_read_from_buffer(user_buf, count, ppos, buffer, strlen(buffer));
-	return ret;
+    return ret;
 }
 
 static ssize_t synap_write_address(struct file *file, const char __user *buffer, size_t count, loff_t *ppos)
 {
-	int buf[128];
+    int buf[128];
     int ret,i;
-	struct synaptics_ts_data *ts = ts_g;
+    struct synaptics_ts_data *ts = ts_g;
     int temp_block,wbyte;
     char reg[30];
 
     ret = sscanf(buffer,"%x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x",\
-    &buf[0],&buf[1],&buf[2],&buf[3],&buf[4],&buf[5],&buf[6],&buf[7],&buf[8],&buf[9],\
-    &buf[10],&buf[11],&buf[12],&buf[13],&buf[14],&buf[15],&buf[16],&buf[17]);
+        &buf[0],&buf[1],&buf[2],&buf[3],&buf[4],&buf[5],&buf[6],&buf[7],&buf[8],&buf[9],\
+        &buf[10],&buf[11],&buf[12],&buf[13],&buf[14],&buf[15],&buf[16],&buf[17]);
     for (i = 0;i < ret;i++)
     {
         TPD_DEBUG("buf[i]=0x%x,",buf[i]);
@@ -1813,7 +1813,7 @@ static ssize_t synap_write_address(struct file *file, const char __user *buffer,
     }
     else
         block = temp_block;
-	return count;
+    return count;
 }
 
 #ifdef SUPPORT_GLOVES_MODE
