@@ -957,7 +957,7 @@ CSID_TG:
 	/*Save sensor info*/
 	s_ctrl->sensordata->cam_slave_info = slave_info;
 
-	msm_sensor_fill_sensor_info(s_ctrl, probed_info, entity_name);
+    msm_sensor_fill_sensor_info(s_ctrl, probed_info, entity_name);
 
 	return rc;
 
