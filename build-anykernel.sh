@@ -21,7 +21,7 @@ DEFCONFIG="zenith_oneplus3_defconfig"
 DTBIMAGE="dtb"
 
 # Kernel Details
-KERNEL=Zenith
+KERNEL=RenderZenith
 DEVICE="OP3"
 VERSION="005"
 RELEASE="${KERNEL}.${DEVICE}.EAS.${VERSION}"
