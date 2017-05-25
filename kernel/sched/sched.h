@@ -1186,7 +1186,7 @@ static const u32 prio_to_wmult[40] = {
 #ifdef CONFIG_SMP
 #define ENQUEUE_WAKING		0x20
 #else
-#define ENQUEUE_WAKING		0
+#define ENQUEUE_WAKING		0x00
 #endif
 
 #define ENQUEUE_WAKEUP_NEW	0x20
