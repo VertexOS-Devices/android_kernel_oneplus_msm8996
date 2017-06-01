@@ -1644,7 +1644,6 @@ CONFIG_CLD_LL_CORE=y
 # CONFIG_CNSS_SECURE_FW is not set
 CONFIG_BUS_AUTO_SUSPEND=y
 # CONFIG_CNSS_LOGGER is not set
-CONFIG_WLAN_FEATURE_RX_WAKELOCK=y
 
 #
 # Enable WiMAX (Networking options) to see the WiMAX drivers
