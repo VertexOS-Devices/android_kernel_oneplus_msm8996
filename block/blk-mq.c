@@ -1127,9 +1127,9 @@ static struct request *blk_mq_map_request(struct request_queue *q,
 		hctx = alloc_data.hctx;
 	}
 
-	data->hctx = alloc_data.hctx;
-	data->ctx = alloc_data.ctx;
-	data->hctx->queued++;
+	hctx->queued++;
+	data->hctx = hctx;
+	data->ctx = ctx;
 	return rq;
 }
 
