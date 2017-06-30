@@ -136,7 +136,8 @@ unsigned int sysctl_sched_cfs_bandwidth_slice = 5000UL;
  * The margin used when comparing utilization with CPU capacity:
  * util * margin < capacity * 1024
  */
-unsigned int capacity_margin = 1280; /* ~20% */
+#define SCHED_CAPACITY_MARGIN 1280
+unsigned int capacity_margin = SCHED_CAPACITY_MARGIN; /* ~20% */
 
 static inline void update_load_add(struct load_weight *lw, unsigned long inc)
 {
@@ -5963,6 +5964,15 @@ static int start_cpu(bool boosted)
 	return boosted ? rd->max_cap_orig_cpu : rd->min_cap_orig_cpu;
 }
 
+/* require some runnable time accrued before overutilized */
+#define MIGRATION_MINIMUM_RUNTIME_TARGET_NS (10 * 1024)
+#define MIGRATION_TARGET_CAPACITY ((MIGRATION_MINIMUM_RUNTIME_TARGET_NS\
+		<< SCHED_CAPACITY_SHIFT) / LOAD_AVG_MAX)
+
+unsigned long migration_capacity_margin =
+		((SCHED_CAPACITY_MARGIN * MIGRATION_TARGET_CAPACITY)
+				>> SCHED_CAPACITY_SHIFT);
+
 static inline int find_best_target(struct task_struct *p, int *backup_cpu,
 				   int prev_cpu, bool boosted, bool prefer_idle)
 {
@@ -6118,9 +6128,10 @@ static inline int find_best_target(struct task_struct *p, int *backup_cpu,
 			 * The goal here is to remain in EAS mode as long as
 			 * possible at least for !prefer_idle tasks.
 			 */
-			if ((new_util * capacity_margin) > \
-			    (capacity_orig * SCHED_CAPACITY_SCALE))
+			if ((new_util * migration_capacity_margin) >
+				(capacity_orig * SCHED_CAPACITY_SCALE)) {
 				continue;
+			}
 
 			/*
 			 * Enforce energy_diff
