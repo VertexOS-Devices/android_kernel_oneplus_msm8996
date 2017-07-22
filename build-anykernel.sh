@@ -34,6 +34,7 @@ export SUBARCH=arm64
 export KBUILD_BUILD_USER=joshuous
 export KBUILD_BUILD_HOST=vertexos
 export CCACHE=ccache
+export KBUILD_OUTPUT="${HOME}/kernel/output"
 
 # Paths
 KERNEL_DIR=`pwd`
@@ -41,7 +42,8 @@ REPACK_DIR="${HOME}/kernel/AnyKernel2"
 PATCH_DIR="${HOME}/kernel/AnyKernel2/patch"
 MODULES_DIR="${HOME}/kernel/AnyKernel2/modules/"
 ZIP_MOVE="${HOME}/kernel/zips"
-ZIMAGE_DIR="$KERNEL_DIR/arch/arm64/boot"
+#ZIMAGE_DIR="$KERNEL_DIR/arch/arm64/boot"
+ZIMAGE_DIR="$KBUILD_OUTPUT/arch/arm64/boot"
 
 # Functions
 function clean_all {
@@ -61,14 +63,13 @@ function make_kernel {
     echo
     make $DEFCONFIG
     make $THREAD
-    cp -vr $ZIMAGE_DIR/$KERNEL_IMAGE $REPACK_DIR/zImage
 }
 
 function make_modules {
     if [ -f "$MODULES_DIR/*.ko" ]; then
       rm `echo $MODULES_DIR"/*.ko"`
     fi
-    find $KERNEL_DIR -name '*.ko' -exec cp -v {} $MODULES_DIR \;
+    find $KERNEL_OUTPUT -name '*.ko' -exec cp -v {} $MODULES_DIR \;
 }
 
 function make_dtb {
@@ -76,6 +77,7 @@ function make_dtb {
 }
 
 function make_zip {
+    cp -vr $ZIMAGE_DIR/$KERNEL_IMAGE $REPACK_DIR/zImage
     cd $REPACK_DIR
     zip -r9 "$RELEASE"-"$(date -u +%Y%m%d)".zip *
     mv "$RELEASE"-"$(date -u +%Y%m%d)".zip $ZIP_MOVE
