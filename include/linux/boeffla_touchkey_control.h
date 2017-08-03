@@ -26,7 +26,7 @@
 #define MODE_TOUCHKEY_ONLY	1
 #define MODE_OFF			2
 
-#define TIMEOUT_DEFAULT		2000
+#define TIMEOUT_DEFAULT		1500
 #define TIMEOUT_MIN			0
 #define TIMEOUT_MAX			30000
 
