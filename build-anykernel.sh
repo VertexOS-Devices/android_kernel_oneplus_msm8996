@@ -23,7 +23,7 @@ DTBIMAGE="dtb"
 # Kernel Details
 KERNEL=RenderZenith
 DEVICE="OP3"
-VERSION="009"
+VERSION="010"
 RELEASE="${KERNEL}.${DEVICE}.EAS.${VERSION}"
 
 # Vars
