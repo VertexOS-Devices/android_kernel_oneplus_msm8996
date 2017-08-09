@@ -403,9 +403,10 @@ KBUILD_CFLAGS   := -Werror -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -fno-strict-aliasing -fno-common \
 		   -Werror-implicit-function-declaration \
 		   -Wno-maybe-uninitialized \
+		   -Wno-error=tautological-compare \
 		   -Wno-format-security \
 		   -mcpu=cortex-a57.cortex-a53 -mtune=cortex-a57.cortex-a53 \
-		   -std=gnu89
+		   -std=gnu89 
 		   
 # arter97's optimizations
 KBUILD_CFLAGS	+= -pipe -fno-pic -O2
