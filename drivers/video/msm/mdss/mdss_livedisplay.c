@@ -458,8 +458,7 @@ static ssize_t mdss_livedisplay_get_dci_p3(struct device *dev,
 }
 
 static ssize_t mdss_livedisplay_set_dci_p3(struct device *dev,
-							   struct device_attribute *attr,
-							   const char *buf, size_t count)
+		struct device_attribute *attr, const char *buf, size_t count)
 {
 	int value = 0;
 	struct fb_info *fbi = dev_get_drvdata(dev);
@@ -651,10 +650,10 @@ int mdss_livedisplay_parse_dt(struct device_node *np, struct mdss_panel_info *pi
 	}
 
 	mlc->dci_p3_on_cmds = of_get_property(np,
-			"cm,mdss-livedisplay-dci_p3-on-cmd", &mlc->dci_p3_on_cmds_len);
+			"cm,mdss-livedisplay-dci-p3-on-cmd", &mlc->dci_p3_on_cmds_len);
 	if (mlc->dci_p3_on_cmds_len) {
 		mlc->dci_p3_off_cmds = of_get_property(np,
-				"cm,mdss-livedisplay-dci_p3-off-cmd", &mlc->dci_p3_off_cmds_len);
+			"cm,mdss-livedisplay-dci-p3-off-cmd", &mlc->dci_p3_off_cmds_len);
 		if (mlc->dci_p3_off_cmds_len)
 			mlc->caps |= MODE_DCI_P3;
 	}
